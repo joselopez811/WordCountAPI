@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Your Scores</h1>
+ <p id="scores"></p>
+    <button onclick="myJavascriptFunctionW()">Add Win</button>
+    <button onclick="myJavascriptFunctionL()">Add Loss</button>
+    <button onclick="myJavascriptFunctionT()">Add Tie</button>        
+</body>
+<script>
+const para = document.getElementById('scores'); // Get the list where we will place our authors
+fetch('http://localhost:8080/ScoreAPI/score')
+ .then(function (response) {
+     return response.json();
+ })
+ .then(function (data) {
+      para.innerHTML = '<p><strong>Wins:</strong> ' + data.wins + '<p><strong>Losses:</strong> ' + data.losses + '<p><strong>Ties:</strong> ' + data.ties;
+ })
+ .catch(function (err) {
+     console.log('error: ' + err);
+ });
+function myJavascriptFunctionW() {
+    fetch('http://localhost:8080/ScoreAPI/score/wins', {
+        method: 'post'
+      }).then(function(response) {
+        return response.json();
+      });
+    location.reload();
+}
+function myJavascriptFunctionL() {
+    fetch('http://localhost:8080/ScoreAPI/score/losses', {
+        method: 'post'
+      }).then(function(response) {
+        return response.json();
+      });
+    location.reload();
+}
+function myJavascriptFunctionT() {
+    fetch('http://localhost:8080/ScoreAPI/score/ties', {
+        method: 'post'
+      }).then(function(response) {
+        return response.json();
+      }).catch(function (err) {
+       return err;
+     });
+    location.reload();
+}
+</script>
+</html>
+
+
+
+
+
